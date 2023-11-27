@@ -18,8 +18,8 @@ Deneb.ENGINE.MDOT_0 = 7.5; %lbm/s
 Deneb.ENGINE.ASTAR_0 = 2.36^2*pi/4; %in2
 Deneb.ENGINE.THROAT_REGRESSION_RATE = 0.001; %in/s
 
-Deneb.MASS_INITIAL = ;
-Deneb.MASS_FINAL = ;
+Deneb.MASS_INITIAL = 131.7+150;
+Deneb.MASS_FINAL = 131.7;
 
 Deneb.CHUTE.CD_MAIN = 0;
 Deneb.CHUTE.AREA_MAIN = 0;
