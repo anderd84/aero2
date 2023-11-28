@@ -2,7 +2,7 @@ function drag_force = SkinDrag(alt, vel, Deneb)
     R = 287.05; % J/kg*K
     k = 1.4;
     
-    [T_A, a, P_A, density_A] = atmosisa(alt, "extended","on", "action","None")
+    [T_A, a, P_A, density_A] = atmosisa(alt, "extended","on", "action","None");
     Ma_A = vel/a;
     
     OD = Deneb.DIAMETER; % in
@@ -64,13 +64,16 @@ function drag_force = SkinDrag(alt, vel, Deneb)
     drag_force = NC_FD + B_FD + Fin_FD; % lbf
 
     function [waveAngle,M2,P2,T2] = obliqueShock(d,M1,P1,T1)
-    k = 1.4;
-    syms theta
-    eqn = tand(d) == (2/tand(theta))*(M1^2*sind(theta)^2-1)/(M1^2*(k+cosd(2*theta))+2);
-    waveAngle = double(vpasolve(eqn,theta,[0 90]));
-    M2 = sqrt((M1^2*sind(waveAngle)^2+2/(k-1))/((2*k)/(k-1)*M1^2*sind(waveAngle)^2-1)/sind(waveAngle-d)^2);
-    P2 = P1*(2*k/(k+1)*M1^2*sind(waveAngle)^2-(k-1)/(k+1));
-    T2 = T1*(7*M1^2*sind(waveAngle)^2-1)*(M1^2*sind(waveAngle)^2+5)/(36*M1^2*sind(waveAngle)^2);
+        k = 1.4;
+        theta = sym('theta');
+        eqn = tand(d) == (2/tand(theta))*(M1^2*sind(theta)^2-1)/(M1^2*(k+cosd(2*theta))+2);
+        waveAngle = double(vpasolve(eqn,theta,[0 90]));
+        if sum(size(waveAngle)) < 2
+            disp("EROORR!!!! no solultion for theta, are you doing subsonic?")
+        end
+        M2 = sqrt((M1^2*sind(waveAngle)^2+2/(k-1))/((2*k)/(k-1)*M1^2*sind(waveAngle)^2-1)/sind(waveAngle-d)^2);
+        P2 = P1*(2*k/(k+1)*M1^2*sind(waveAngle)^2-(k-1)/(k+1));
+        T2 = T1*(7*M1^2*sind(waveAngle)^2-1)*(M1^2*sind(waveAngle)^2+5)/(36*M1^2*sind(waveAngle)^2);
     end
     
     function [waveAngle1,waveAngle2,M2,P2,T2] = prandtlExpansion(d,M1,P1,T1)
@@ -78,10 +81,12 @@ function drag_force = SkinDrag(alt, vel, Deneb)
         v1 = sqrt((k+1)/(k-1))*atand(sqrt((k-1)/(k+1)*(M1^2-1)))-atand(sqrt(M1^2-1));
         v2 = v1 + d;
     
-        syms M2
+        M2 = sym('M2');
         eqn = v2 == sqrt((k+1)/(k-1))*atand(sqrt((k-1)/(k+1)*(M2^2-1)))-atand(sqrt(M2^2-1));
         M2 = double(vpasolve(eqn,M2,[0 100]));
-    
+        if sum(size(M2)) < 2
+            disp("EROORR!!!! no solultion for m2, are you doing subsonic?")
+        end
         T2 = T1*((1+(k-1)/2*M1^2)/(1+(k-1)/2*M2^2));
         P2 = P1*((1+(k-1)/2*M1^2)/(1+(k-1)/2*M2^2))^(k/(k-1));
     

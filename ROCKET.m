@@ -25,6 +25,3 @@ Deneb.CHUTE.CD_MAIN = 0;
 Deneb.CHUTE.AREA_MAIN = 0;
 Deneb.CHUTE.CD_DROGUE = 0;
 Deneb.CHUTE.AREA_DROGUE = 0;
-
-
-
