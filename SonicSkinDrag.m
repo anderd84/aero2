@@ -64,9 +64,10 @@ function drag_force = SonicSkinDrag(alt, vel, Deneb)
         k = 1.4;
         theta = sym('theta');
         eqn = tand(d) == (2/tand(theta))*(M1^2*sind(theta)^2-1)/(M1^2*(k+cosd(2*theta))+2);
-        waveAngle = double(vpasolve(eqn,theta,[0 90]));
+        waveAngle = double(vpasolve(eqn,theta,[0 180]));
         if sum(size(waveAngle)) < 2
-            disp("EROORR!!!! no solultion for theta, are you doing subsonic?")
+            disp("EROORR!!!! no solultion for theta, are you doing subsonic? (or tangent is fucky)");
+            fprintf("Occured at Mach: %d", M1);
             waveAngle = 45;
         end
         M2 = sqrt((M1^2*sind(waveAngle)^2+2/(k-1))/((2*k)/(k-1)*M1^2*sind(waveAngle)^2-1)/sind(waveAngle-d)^2);
