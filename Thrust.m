@@ -11,8 +11,8 @@ function [thrust, mdot] = Thrust(t, P_atm, Deneb)
     % A_throat = pi .* (1/4) .*(d_throat).^2; %(in^2)
     % P_Chamber = mdot_calc .* (sqrt(g_c * R_gas * T_Chamber))./ A_throat ./ sqrt(gamma) ./((gamma +1)  / 2)^(-(gamma +1)/(2* (gamma -1)));
 
-    thrust = 2000;
-    mdot = 7.5;
+    thrust = 2000 * 4.44822; % N
+    mdot = 7.5 / 2.20462;
 
     % function [Exit_Mach, Exit_Pressure, Exit_Temperature] = Nozzle(Total_Temperature, Total_Pressure, Throat_Area, Exit_Area, Specific_Heat_Ratio)
     %     syms Ma;
