@@ -1,4 +1,4 @@
-function drag_force = SonicSkinDrag(alt, vel, Deneb)
+function [drag_force, pressureAtFrontOfRocketPastShock] = SonicSkinDrag(alt, vel, Deneb)
     R = 287.05; % J/kg*K
     k = 1.4;
     
@@ -15,7 +15,7 @@ function drag_force = SonicSkinDrag(alt, vel, Deneb)
     % oblique shock
     NC_a = asind((OD/2)/NC_SL); % deg
     [NC_WA,M_2,P_2,T_2] = obliqueShock(NC_a,Ma_A,P_A,T_A);
-    
+    pressureAtFrontOfRocketPastShock = P_2;
     % skin drag
     NC_A = pi()*(OD/2)*((OD/2)+sqrt(NC_L^2+(OD/2)^2)); % m^2
     
@@ -95,7 +95,7 @@ function drag_force = SonicSkinDrag(alt, vel, Deneb)
     end
     
     function [Re,CD,FD] = skinDrag(density,V,L,A,mu)
-        Re = density*V*L/mu;
+        Re = abs(density*V*L/mu);
         
         CD = 0;
         if Re < 500000 % Turbulent

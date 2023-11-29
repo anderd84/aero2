@@ -25,3 +25,6 @@ Deneb.CHUTE.CD_MAIN = 2.2;
 Deneb.CHUTE.AREA_MAIN = 14;
 Deneb.CHUTE.CD_DROGUE = 1.7;
 Deneb.CHUTE.AREA_DROGUE = 2;
+
+Deneb.CD_TRANS = 1.1;
+Deneb.LIM_TRANS = 1.35;
